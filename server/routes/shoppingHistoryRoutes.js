@@ -1,16 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   createShoppingHistoryEntry,
   getAllShoppingHistory,
   getShoppingHistoryByUserId,
-  deleteShoppingHistoryEntry,
-} = require("../controllers/shoppingHistoryController.js");
+  deleteShoppingHistoryEntry
+} = require("../controllers/shoppingHistoryController");
 
-router.post("/shopping-history", createShoppingHistoryEntry);
-router.get("/shopping-history", getAllShoppingHistory);
-router.get("/shopping-history/:user_id", getShoppingHistoryByUserId);
-router.delete("/shopping-history/:id", deleteShoppingHistoryEntry);
+router.post("/", createShoppingHistoryEntry); 
+router.get("/", getAllShoppingHistory); 
+router.get("/:user_id", getShoppingHistoryByUserId); 
+router.delete("/:id", deleteShoppingHistoryEntry); 
 
 module.exports = router;
-

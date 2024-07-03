@@ -20,28 +20,24 @@ const createItem = async (req, res) => {
   }
 };
 
-const getItem = async (req, res) => {
-  const { id } = req.params;
+
+const getItemByCategoryId = async (req, res) => {
+  const { categoryId } = req.params;
 
   try {
-    const item = await Item.findByPk(id, {
-      include: [
-        {
-          model: require("../models").Category,
-          attributes: ["name"],
-        },
-      ],
+    const items = await Item.findAll({
+      where: { category_id: categoryId },
+      attributes: ['id', 'name', 'note', 'image_url'],
     });
 
-    if (!item) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    return res.status(200).json(item);
+    return res.status(200).json(items);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
+
+
+
 
 const deleteItem = async (req, res) => {
   const { id } = req.params;
@@ -85,5 +81,5 @@ const updateItem = async (req, res) => {
   }
 };
 
-module.exports = { createItem, getItem, deleteItem, updateItem };
+module.exports = { createItem, getItemByCategoryId, deleteItem, updateItem };
 

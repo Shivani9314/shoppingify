@@ -8,6 +8,7 @@ const userRoutes = require('./routes/userRoutes')
 const listItemsRoutes = require('./routes/listItemRoutes');
 const shoppingHistoryRoutes = require('./routes/shoppingHistoryRoutes');
 const db = require('./models');
+const cors = require('cors');
 
 db.sequelize.sync()
   .then(() => {
@@ -20,13 +21,18 @@ db.sequelize.sync()
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-app.use('', userRoutes);
-app.use('/category', categoryRoutes);
-app.use('/categories' , itemsRoutes);
-app.use('/list', listRoutes);
-app.use('', listItemsRoutes)
-app.use('' , shoppingHistoryRoutes);
+app.use('/users', userRoutes); 
+app.use('/category', categoryRoutes); 
+app.use('/items', itemsRoutes); 
+app.use('/list', listRoutes); 
+app.use('/list-items', listItemsRoutes); 
+app.use('/shopping-history', shoppingHistoryRoutes); 
 
 
 const PORT = process.env.PORT || 3000;
