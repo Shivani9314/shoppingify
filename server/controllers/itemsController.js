@@ -1,24 +1,35 @@
-const { Item } = require("../models");
+const { Category, Item } = require('../models');
 
 const createItem = async (req, res) => {
-  const { name, note, image_url } = req.body;
-  const { id } = req.params;
+  const { name, note, image_url, categoryName } = req.body;
 
   try {
     if (!name) {
       return res.status(400).json({ message: "Name field is required" });
     }
+
+    let category;
+    if (categoryName) {
+      const [categoryInstance] = await Category.findOrCreate({
+        where: { name: categoryName },
+        defaults: { name: categoryName }
+      });
+      category = categoryInstance
+    }
+
     const item = await Item.create({
       name,
       note,
       image_url,
-      category_id: id,
+      category_id:category.id ,
     });
+
     return res.status(201).json(item);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
+
 
 
 const getItemByCategoryId = async (req, res) => {
@@ -27,7 +38,7 @@ const getItemByCategoryId = async (req, res) => {
   try {
     const items = await Item.findAll({
       where: { category_id: categoryId },
-      attributes: ['id', 'name', 'note', 'image_url'],
+      attributes: ['id', 'name', 'note', 'image_url', 'category_id'],
     });
 
     return res.status(200).json(items);
@@ -35,7 +46,6 @@ const getItemByCategoryId = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
-
 
 
 
@@ -58,14 +68,14 @@ const deleteItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, note, image_url } = req.body;
 
   try {
     if (!name) {
       return res.status(400).json({ message: "Name is required" });
     }
     const [updated] = await Item.update(
-      { name },
+      { name ,note,image_url},
       {
         where: { id },
       }

@@ -6,7 +6,9 @@ const createListItem = async(req,res) =>{
     try{
         if(!list_id , !item_id , !quantity){
             return res.status(400).json({message:"All fields are required"});
-        } 
+        }
+
+        // const exist = await ListItem.findOne({where:{id : item_id}});
 
         const listItem = await ListItem.create({list_id, item_id , quantity});
         return res.status(200).json(listItem);
@@ -51,11 +53,11 @@ const getListItem = async (req, res) => {
 };
 
 const updateListItem = async (req, res) => {
-    const { id } = req.params;
+    const { itemId } = req.params;
     const { quantity } = req.body;
   
     try {
-      const listItem = await ListItem.findByPk(id);
+      const listItem = await ListItem.findOne({ where: { item_id: itemId } });
   
       if (!listItem) {
         return res.status(404).json({ message: "ListItem not found" });
@@ -72,10 +74,10 @@ const updateListItem = async (req, res) => {
 
 
   const deleteListItem = async (req, res) => {
-    const { id } = req.params;
+    const { itemId } = req.params;
   
     try {
-      const listItem = await ListItem.findByPk(id);
+      const listItem = await ListItem.findOne({where:{item_id:itemId}});
   
       if (!listItem) {
         return res.status(404).json({ message: "ListItem not found" });

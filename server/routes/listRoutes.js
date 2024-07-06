@@ -4,12 +4,16 @@ const {
   createList,
   getList,
   updateList,
-  deleteList
+  deleteList,
+  getActiveList,
+  getListsByUserId
 } = require("../controllers/listController");
 
 router.post("/", createList); 
 router.get("/", getList); 
-router.put("/:id", updateList); 
+router.put("/:listId", updateList); 
 router.delete("/:id", deleteList); 
+router.get('/:userId/active', getActiveList);
+router.get('/:userId', getListsByUserId)
 
 module.exports = router;

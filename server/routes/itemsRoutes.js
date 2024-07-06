@@ -7,7 +7,7 @@ const {
   updateItem
 } = require("../controllers/itemsController");
 
-router.post("/:id", createItem); 
+router.post("/", createItem); 
 router.get("/category/:categoryId", getItemByCategoryId); 
 router.delete("/:id", deleteItem); 
 router.put("/:id", updateItem); 

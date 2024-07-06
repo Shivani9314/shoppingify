@@ -11,7 +11,7 @@ const {
 router.post("/", createListItem); 
 router.get("/lists/:list_id", getAllListItemOfList); 
 router.get("/:id", getListItem); 
-router.put("/:id", updateListItem); 
-router.delete("/:id", deleteListItem); 
+router.put("/:itemId", updateListItem); 
+router.delete("/:itemId", deleteListItem); 
 
 module.exports = router;

@@ -1,16 +1,18 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     static associate(models) {
-      // define association here
       Item.belongsTo(models.Category, { foreignKey: "category_id" });
       Item.belongsToMany(models.List, {
         through: models.ListItem,
         foreignKey: "item_id",
+        as: "lists",
       });
     }
   }
+
   Item.init(
     {
       name: { type: DataTypes.STRING, allowNull: false, unique: true },
@@ -23,5 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Item",
     }
   );
+
   return Item;
 };
