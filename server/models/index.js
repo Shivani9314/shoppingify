@@ -11,13 +11,20 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable]);
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    logging: false // Disable logging; default: console.log
+  });
 } else {
   sequelize = new Sequelize(
-    config.database, 
-    config.username, 
-    config.password, 
-    config
+    config.database,
+    config.username,
+    config.password,
+    {
+      host: config.host,
+      dialect: 'postgres'
+    }
   );
 }
 
