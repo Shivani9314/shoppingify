@@ -23,7 +23,7 @@ sequelize.sync()
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://shoppingify-steel.vercel.app/',
+  origin: 'https://shoppingify-steel.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));

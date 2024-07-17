@@ -43,7 +43,7 @@ function HomePage() {
     dispatch(fetchCategories());
   };
 
-  const filteredCategories = categories.filter(category =>
+  const filteredCategories = categories?.filter(category =>
     category.Items && category.Items.some(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
@@ -75,7 +75,7 @@ function HomePage() {
           </div>
         </div>
         <div className='mt-40 overflow-y-scroll w-full'>
-          {filteredCategories.map((category) => (
+          {filteredCategories?.map((category) => (
             <Category key={category.id} category={category} setItemModalState={handleItemClick} searchQuery={searchQuery} />
           ))}
         </div>

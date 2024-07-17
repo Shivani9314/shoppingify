@@ -74,7 +74,7 @@ function CreateItemModal({ onCloseModal }) {
               list="categories"
             />
             <datalist className='bg-white border-accent overflow-y-auto' id="categories">
-              {categories.map(category => (
+              {categories?.map(category => (
                 <option className='bg-white text-black cursor-pointer' key={category.id} value={category.name} />
               ))}
             </datalist>
